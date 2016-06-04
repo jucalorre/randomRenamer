@@ -3,28 +3,52 @@
 #include <cstdlib>
 #include <fstream>
 #include <dirent.h>
+#include <sys/types.h>
+#include <string.h>
 using namespace std;
-int * cantidad;
-int contarArchivos(int cant)
+char ruta[40]="~/Documentos/Programacion/";
+int crearArreglo(int f)
 {
-	int contador=0;
-	DIR *dir;
-	struct dirent *ent;
-	if(dir==NULL)
+	int i;
+	int **rutas = new int* [f];
+	for (i = 0; i < f; i++)
 	{
-		error("No  puedo abrir este directorio")
+	rutas[i] = new int[50];
 	}
-	while((ent=reddir(dir)) != NULL)
-	{
-		contador+=1;
-		if((strcmp(ent->d_name, "."))&&(ent->d_name, "..") !=0)
-		{
-			procesoArchivo(ent->d_name)
-		}
-	}
-	closedir(dir);
 	return EXIT_SUCCESS;
 }
+char *obtenerNombre(char *ruta, struct dirent *ent)
+{
+	char *nombrecompleto;
+	int tmp;
+	tmp=strlen(ruta);
+	nombrecompleto=new char(tmp+strlen(ent->d_name)+2);
+	if (ruta[tmp-1]=='/')
+		sprintf(nombrecompleto,"%s%s", ruta, ent->d_name);
+	else
+		sprintf(nombrecompleto,"%s/%s", ruta, ent->d_name);
+	return nombrecompleto;
+}
+int contarArchivos(char *cantidad)
+{
+	struct dirent *ent;
+	char *nombrecompleto;
+	int cont=0;
+	struct dirent *ent;
+	crearArreglo(cont);
+	while((ent->d_name)!=0)
+	{
+		nombrecompleto=obtenerNombre(ruta, ent);
+		cont+=1;
+	}
+	return 0;
+}
+
+
+
+
+
+int * cantidad;
 int main()
 {
 	srand((unsigned)time(NULL));
@@ -32,23 +56,6 @@ int main()
 	cin.get();
 	return 0;
 }
-void error(const char *s)
-{
-  /* perror() devuelve la cadena S y el error (en cadena de caracteres) que tenga errno */
-  perror (s);
-  exit(EXIT_FAILURE);
-}
-void procesoArchivo(char *archivo)
-{
-	char *path;
-	FILE *fich;
-	fich=fopen(archivo, "r")
-	if(fich)
-	{
-		
-		
-	}
-	else
-	{
-	}
-}
+
+
+
